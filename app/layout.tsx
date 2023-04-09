@@ -6,6 +6,10 @@ import { ClerkProvider } from '@clerk/nextjs/app-beta'
 export const metadata = {
   title: 'DND Helper',
   description: 'Lets get rid of those stupid character sheets',
+  icons: {
+    icon: "/favicon.ico",
+  },
+  manifest: "/manifest.json"
 }
 
 export default function RootLayout({
