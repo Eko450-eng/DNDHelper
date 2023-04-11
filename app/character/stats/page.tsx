@@ -5,7 +5,6 @@ import { useUser } from '@clerk/nextjs'
 import { Button, Table, NumberInput, Select, Switch, Modal, Group, Center } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { IconCheck, IconX } from '@tabler/icons-react'
-import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 export default function Page() {
@@ -14,7 +13,7 @@ export default function Page() {
   const [stats, setStats] = useState<Stat[] | null>(null)
   const [detstats, setDetstats] = useState<DetStat[] | null>(null)
   const [detmodal, setDet] = useState<boolean>(false)
-  const router = useRouter()
+
   const form = useForm({
     initialValues: {
       name: "Strength",
@@ -38,6 +37,7 @@ export default function Page() {
       method: "POST",
       body: JSON.stringify({ user, ...values })
     }).then((res) => {
+      getData()
       if (res.status == 200) form.reset()
     })
   }
@@ -47,6 +47,7 @@ export default function Page() {
       method: "POST",
       body: JSON.stringify({ user, ...values })
     }).then((res) => {
+      getData()
       if (res.status == 200) form.reset()
     })
   }
@@ -74,7 +75,7 @@ export default function Page() {
 
   useEffect(() => {
     getData()
-  })
+  }, [])
 
   return (
     <div>
@@ -161,7 +162,7 @@ export default function Page() {
             {
               stats.map((v: Stat, k: number) => {
                 return (
-                  <tr key={k}>
+                  <tr key={`state${k}`}>
                     <td>{v.name}</td>
                     <td>{v.value}</td>
                     <td>{v.savingvalue}</td>
@@ -188,7 +189,7 @@ export default function Page() {
             {
               detstats.map((v: DetStat, k: number) => {
                 return (
-                  <tr key={k}>
+                  <tr key={`detstat${k}`}>
                     <td>{v.name}</td>
                     <td>{v.value}</td>
                     <td>{v.proficiency ? <IconCheck color="green" /> : <IconX color="red" />}</td>
