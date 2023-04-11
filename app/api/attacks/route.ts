@@ -12,9 +12,13 @@ export async function GET(req: Request) {
   const userColl = await db.select().from(Character).where(eq(Character.playerid, userId))
   const user = userColl[0]
 
-  const attack = await db.select().from(Attack)
-    .where(eq(Attack.characterid, user.id))
-  return NextResponse.json(attack)
+  try {
+    const attack = await db.select().from(Attack)
+      .where(eq(Attack.characterid, user.id))
+    return NextResponse.json(attack)
+  } catch (e) {
+    return NextResponse.json(500)
+  }
 }
 
 // Create Attack

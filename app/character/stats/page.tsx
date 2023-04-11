@@ -2,10 +2,9 @@
 import { skills } from '@/app/enums'
 import { DetStat, Stat } from '@/db/schema/schema'
 import { useUser } from '@clerk/nextjs'
-import { Button, Table, NumberInput, Select, Stack, Switch, TextInput, Modal, Group, Center } from '@mantine/core'
+import { Button, Table, NumberInput, Select, Switch, Modal, Group, Center } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { IconCheck, IconX } from '@tabler/icons-react'
-import { stat } from 'fs'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
@@ -54,15 +53,17 @@ export default function Page() {
 
   async function getStats() {
     if (!user.isSignedIn) return
-    const stats = await fetch(`/api/character/stats?userID=${user.user.id}`, { method: "GET", cache: "no-store" }).then(async (res: any) => res)
+    const stats = await fetch(`/api/character/stats?userid=${user.user.id}`, { method: "GET", cache: "no-store" }).then(async (res: any) => res)
     const stat = await stats.json()
+    if (stat === 500) return
     setStats(stat.stats)
   }
 
   async function getDetstats() {
     if (!user.isSignedIn) return
-    const detstats = await fetch(`/api/character/detstats?userID=${user.user.id}`, { method: "GET", cache: "no-store" }).then(async (res: any) => res)
+    const detstats = await fetch(`/api/character/detstats?userid=${user.user.id}`, { method: "GET", cache: "no-store" }).then(async (res: any) => res)
     const detstat = await detstats.json()
+    if (detstat === 500) return
     setDetstats(detstat.stats)
   }
 

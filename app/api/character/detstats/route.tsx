@@ -19,7 +19,7 @@ export async function POST(req: Request) {
 
   if (!name) return
   const existing = await db.select().from(DetStat).where(and(eq(DetStat.characterid, characterid), eq(DetStat.name, name)))
-  if (existing.length = 0) {
+  if (existing.length > 0) {
     await db.update(DetStat)
       .set(values)
       .where(and(eq(DetStat.characterid, characterid), eq(DetStat.name, name)))
@@ -32,11 +32,14 @@ export async function POST(req: Request) {
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url)
-  const userID = searchParams.get("userID")
+  const userID = searchParams.get("userid")
 
   if (!userID) return
   const character = await db.select().from(Character).where(eq(Character.playerid, userID))
-  const stats = await db.select().from(DetStat).where(eq(DetStat.characterid, character[0].id))
-
-  return NextResponse.json({ stats: stats })
+  try {
+    const stats = await db.select().from(DetStat).where(eq(DetStat.characterid, character[0].id))
+    return NextResponse.json({ stats: stats })
+  } catch (e) {
+    return NextResponse.json(500)
+  }
 }

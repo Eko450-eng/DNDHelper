@@ -48,7 +48,7 @@ export default function Page() {
   useEffect(() => {
     if (!user.isSignedIn) return
     getRole()
-  })
+  }, [])
 
   return (
     <div>

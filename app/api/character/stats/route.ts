@@ -25,6 +25,7 @@ export async function POST(req: Request) {
   const character = await db.select().from(Character).where(eq(Character.playerid, user.user.id))
   const characterid = character[0].id
 
+  console.log(character)
 
   const values = {
     name: name,
@@ -37,7 +38,8 @@ export async function POST(req: Request) {
 
   if (!name) return
   const existing = await db.select().from(Stat).where(and(eq(Stat.characterid, characterid), eq(Stat.name, name)))
-  if (existing.length = 0) {
+
+  if (existing.length > 0) {
     await db.update(Stat)
       .set(values)
       .where(and(eq(Stat.characterid, characterid), eq(Stat.name, name)))
@@ -51,11 +53,16 @@ export async function POST(req: Request) {
 // Get Stats
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url)
-  const userID = searchParams.get("userID")
+  const userID = searchParams.get("userid")
 
   if (!userID) return
   const character = await db.select().from(Character).where(eq(Character.playerid, userID))
-  const stats = await db.select().from(Stat).where(eq(Stat.characterid, character[0].id))
 
-  return NextResponse.json({ stats: stats })
+  try {
+    const stats = await db.select().from(Stat).where(eq(Stat.characterid, character[0].id))
+    return NextResponse.json({ stats: stats })
+  } catch (e) {
+    return NextResponse.json(500)
+  }
+
 }

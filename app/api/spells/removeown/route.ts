@@ -3,7 +3,7 @@ import { Character, Spellbook } from "@/db/schema/schema"
 import { eq, and } from "drizzle-orm/expressions"
 import { NextResponse } from "next/server"
 
-export async function POST(req: Request) {
+export async function DELETE(req: Request) {
   const body = await req.json()
   const { spellId, tier, user } = body
 

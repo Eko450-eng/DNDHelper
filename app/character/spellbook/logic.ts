@@ -17,6 +17,6 @@ export async function removeSpell(id: number, tier: number, user: any) {
     user: user
   }
 
-  const res = await fetch(`/api/spells/removeown?spellID=${id}`, { method: "POST", body: JSON.stringify(body) })
+  const res = await fetch(`/api/spells/removeown`, { method: "DELETE", body: JSON.stringify(body) })
   return res.json()
 }

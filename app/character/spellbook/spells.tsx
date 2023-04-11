@@ -16,13 +16,13 @@ export default function SpellsView({ spellsId }: { spellsId: number[] }) {
   async function getData() {
     const func = getCertainSpell(spellsId)
     const spell = await func
-    if (!spell) return
+    if (!spell) setSpells(null)
     setSpells(spell.spells)
   }
 
   useEffect(() => {
     getData()
-  })
+  }, [spellsId])
 
   return (
     <>

@@ -15,7 +15,6 @@ export default function Home() {
     if (!user.isSignedIn) return
     const character = await fetch(`/api/character?userid=${user.user.id}`, { method: "GET", cache: "no-store" })
     const char = await character.json()
-    console.log(char)
     if (char === 500) {
       setPleaseCreate(true)
       return

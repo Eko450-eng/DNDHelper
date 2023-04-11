@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "cross-env NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -36,6 +36,7 @@
     "@types/react-dom": "18.0.11",
     "@types/react-is": "^17.0.3",
     "@types/resolve": "^1.20.2",
+    "cross-env": "^7.0.3",
     "drizzle-orm": "^0.23.8",
     "emotion-icons": "^3.27.0",
     "eslint": "8.37.0",

@@ -4,6 +4,7 @@ const withPWA = require('@ducanh2912/next-pwa').default({
 })
 
 module.exports = withPWA({
+  disable: true,
   experimental: {
     appDir: true,
     serverComponentsExternalPackages: ["pg", "pg-native"],

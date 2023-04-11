@@ -22,6 +22,7 @@ export default function Page() {
   async function getAttacks() {
     if (!isSignedIn) return
     const attack = await fetch(`/api/attacks?userId=${user.id}`, { method: "GET", cache: "no-store" }).then(async (res: any) => res)
+    if (attack === 500) return
     const attacks = await attack.json()
     setAttacks(attacks)
     setModal(false)
@@ -40,7 +41,7 @@ export default function Page() {
 
   useEffect(() => {
     getAttacks()
-  })
+  }, [])
 
   return (
     <>

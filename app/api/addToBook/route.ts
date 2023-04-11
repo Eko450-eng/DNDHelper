@@ -20,7 +20,7 @@ export async function POST(req: Request) {
   })
 
   const oldSpells = existing[0].spells
-  if (oldSpells && oldSpells.includes(spells)) return
+  if (oldSpells && oldSpells.includes(spells)) return NextResponse.json(500)
 
   const newSpells = () => {
     if (!oldSpells) return [spells]
@@ -42,7 +42,10 @@ export async function GET(req: Request) {
 
   if (!userID) return
   const character = await db.select().from(Character).where(eq(Character.playerid, userID))
-  const stats = await db.select().from(Spellbook).where(eq(Spellbook.characterid, character[0].id))
-
-  return NextResponse.json({ stats: stats })
+  try {
+    const stats = await db.select().from(Spellbook).where(eq(Spellbook.characterid, character[0].id))
+    return NextResponse.json({ stats: stats })
+  } catch (e) {
+    return NextResponse.json(500)
+  }
 }

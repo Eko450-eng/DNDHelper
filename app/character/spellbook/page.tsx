@@ -41,7 +41,7 @@ export default function Page() {
 
   useEffect(() => {
     getSpellbooks()
-  })
+  }, [])
 
   return (
     <>
