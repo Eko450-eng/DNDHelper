@@ -27,7 +27,8 @@ export default function Page() {
       language: 0,
       stat: 0,
       detstat: 0,
-      spellbook: 0
+      spellbook: 0,
+      party: 0
     }
   })
 
@@ -87,6 +88,11 @@ export default function Page() {
       <NumberInput
         label="init"
         {...form.getInputProps("init")}
+      />
+
+      <NumberInput
+        label="Party"
+        {...form.getInputProps("party")}
       />
 
       <Button type="submit">Create</Button>

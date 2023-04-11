@@ -1,13 +1,15 @@
 'use client'
 import { Character } from "@/db/schema/schema"
-import { ShowCharacterInfo, ShowHealth } from "./CharacterComponents/components"
+import { ChangeHealth, ShowCharacterInfo, ShowHealth, ShowParty } from "./CharacterComponents/components"
 import { useUser } from "@clerk/nextjs"
 import { useEffect, useState } from "react"
 import { Button, Center } from "@mantine/core"
+import { useRouter } from "next/navigation"
 
 
 export default function Home() {
   const user = useUser()
+  const router = useRouter()
   const [character, setCharacter] = useState<Character | null>(null)
   const [pleaseCreate, setPleaseCreate] = useState(true)
 
@@ -42,10 +44,15 @@ export default function Home() {
     }
   }
 
+  function updateValues() {
+    getUser()
+    router.refresh()
+  }
+
   useEffect(() => {
     getUser()
     setRole()
-  }, [])
+  }, [user.isLoaded])
 
   return (
     <main>
@@ -59,6 +66,8 @@ export default function Home() {
           <>
             <ShowCharacterInfo character={character} />
             <ShowHealth character={character} />
+            <ChangeHealth props={{ character: character, getuser: () => updateValues() }} />
+            <ShowParty character={character} />
           </>
         }
       </>

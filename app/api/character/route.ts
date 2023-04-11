@@ -16,6 +16,7 @@ export async function POST(req: Request) {
     alignment: alignment,
     background: background,
     hp: hp,
+    maxhp: hp,
     ac: ac,
     init: init,
     playerid: user.user.id,
@@ -39,4 +40,20 @@ export async function GET(req: Request) {
     console.log(e)
     return NextResponse.json(500)
   }
+}
+
+//Update character
+export async function PATCH(req: Request) {
+  const body = await req.json()
+  const { user, hp, ac, party } = body
+
+  await db.update(Character)
+    .set({
+      hp: hp,
+      ac: ac,
+      party: party,
+    })
+    .where(eq(Character.playerid, user.user.id))
+
+  return NextResponse.json({ status: 200, message: "Character updated" })
 }

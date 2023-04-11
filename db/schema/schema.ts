@@ -1,5 +1,5 @@
 import { InferModel } from 'drizzle-orm'
-import { integer, pgTable, serial, varchar, text, boolean } from 'drizzle-orm/pg-core'
+import { integer, pgTable, serial, varchar, text, boolean, interval } from 'drizzle-orm/pg-core'
 
 export const Spelllist = pgTable("listingsofspells", {
   id: serial("id").primaryKey().notNull(),
@@ -16,9 +16,11 @@ export const Character = pgTable("character", {
   alignment: text("alignment"),
   background: text("background"),
 
+
   class: text("class", { enum: ["Artificer", "Barbarian", "Bard", "Blood Hunter", "Cleric", "Druid", "Fighter", "Monk", "Paladin", "Ranger", "Rogue", "Sorcerer", "Warlock", "Wizard"] }),
 
   hp: integer("hp"),
+  maxhp: integer("maxhp"),
   ac: integer("ac"),
   init: integer("init"),
 
@@ -26,6 +28,8 @@ export const Character = pgTable("character", {
 
   abillitie: integer("abillitie").references(() => Abillitie.id),
   language: integer("language").references(() => Language.id),
+
+  party: integer("party"),
 })
 
 export const Attack = pgTable("attack", {
