@@ -15,6 +15,10 @@
 # production
 /build
 
+# Database
+/db/migrations
+/db/migrations/*
+
 # misc
 .DS_Store
 *.pem

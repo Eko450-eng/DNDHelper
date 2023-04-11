@@ -1,6 +1,12 @@
 import { InferModel } from 'drizzle-orm'
 import { integer, pgTable, serial, varchar, text, boolean } from 'drizzle-orm/pg-core'
 
+export const Spelllist = pgTable("listingsofspells", {
+  id: serial("id").primaryKey().notNull(),
+  index: text("index"),
+  name: text("name"),
+  url: text("url"),
+})
 
 export const Character = pgTable("character", {
   id: serial("id").primaryKey().notNull(),
@@ -17,9 +23,7 @@ export const Character = pgTable("character", {
   init: integer("init"),
 
   playerid: text("playerid"),
-  attacks: integer("attacks").references(() => Attack.id),
-  equipment: integer("equipment").references(() => Equipment.id),
-  coins: integer("coins").references(() => Coins.id),
+
   abillitie: integer("abillitie").references(() => Abillitie.id),
   language: integer("language").references(() => Language.id),
 })
@@ -30,12 +34,14 @@ export const Attack = pgTable("attack", {
   atk: varchar("atk"),
   range: integer("range"),
   type: varchar("type"),
+  characterid: integer("characterid").references(() => Character.id)
 })
 
 export const Equipment = pgTable("equipment", {
   id: serial("id").primaryKey().notNull(),
   name: varchar("name"),
-  amount: integer("amount")
+  amount: integer("amount"),
+  characterid: integer("characterid").references(() => Character.id)
 })
 
 export const Coins = pgTable("coins", {
@@ -45,6 +51,7 @@ export const Coins = pgTable("coins", {
   ep: integer("ep"),
   sp: integer("sp"),
   cp: integer("cp"),
+  characterid: integer("characterid").references(() => Character.id)
 })
 
 export const Abillitie = pgTable("abillitie", {
@@ -111,8 +118,9 @@ export const Spell = pgTable("spell", {
   casting_time: text("casting_time").notNull(),
   range: text("range").notNull(),
   duration: text("duration").notNull(),
-  components: text("components").notNull(),
-  desc: text("desc").array().notNull(),
+  components: text("components").array().notNull(),
+  desc: text("desc"),
+  higherdesc: text("higherdesc"),
   level: integer("level").notNull(),
   classes: text("classes").array()
 })
