@@ -1,5 +1,5 @@
 import db from "@/db/db"
-import { Character, Spell, Spellbook } from "@/db/schema/schema"
+import { Character, Spellbook } from "@/db/schema/schema"
 import { eq, and } from "drizzle-orm/expressions"
 import { NextResponse } from "next/server"
 

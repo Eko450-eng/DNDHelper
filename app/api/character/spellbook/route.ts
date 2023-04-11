@@ -19,7 +19,7 @@ export async function POST(req: Request) {
 
   const existing = await db.select().from(Spellbook).where(and(eq(Spellbook.characterid, characterid), eq(Spellbook.tier, tier)))
 
-  if (existing.length = 0) {
+  if (existing.length !== 0) {
     await db.update(Spellbook)
       .set(values)
       .where(and(eq(Spellbook.characterid, characterid), eq(Spellbook.tier, tier)))

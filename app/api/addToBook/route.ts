@@ -1,5 +1,5 @@
 import db from "@/db/db"
-import { Character, Spell, Spellbook } from "@/db/schema/schema"
+import { Character, Spellbook } from "@/db/schema/schema"
 import { NextResponse } from "next/server"
 import { and, eq } from 'drizzle-orm/expressions'
 
@@ -11,6 +11,7 @@ export async function POST(req: Request) {
   const characterid = character[0].id
 
   const existing: Spellbook[] = await db.select().from(Spellbook).where(and(eq(Spellbook.characterid, characterid), eq(Spellbook.tier, tier)))
+
   if (!existing) await db.insert(Spellbook).values({
     spells: spells,
     characterid: characterid,
@@ -19,8 +20,6 @@ export async function POST(req: Request) {
   })
 
   const oldSpells = existing[0].spells
-
-  if (!spells) return
   if (oldSpells && oldSpells.includes(spells)) return
 
   const newSpells = () => {

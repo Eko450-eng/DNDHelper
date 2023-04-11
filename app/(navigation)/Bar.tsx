@@ -1,6 +1,6 @@
 'use client'
-import { ActionIcon, Affix, Button, Center, Group, Stack } from "@mantine/core"
-import { IconBackpack, IconBarrel, IconBook, IconChartBar, IconFriends, IconHome, IconLogin, IconLogout, IconSword, IconUserPlus, IconWand } from '@tabler/icons-react'
+import { ActionIcon, Affix, Center, Group, Stack } from "@mantine/core"
+import { IconBackpack, IconBarrel, IconBook, IconChartBar, IconCirclePlus, IconHome, IconLogin, IconLogout, IconSword, IconUserPlus, IconWand } from '@tabler/icons-react'
 import { useAuth } from '@clerk/nextjs'
 import Link from "next/link"
 import { useState } from "react"
@@ -13,13 +13,20 @@ interface ILinkType {
 
 export default function Bar() {
   const user = useAuth()
-  const [opened, setOpened] = useState(false)
+  const [opened, setOpened] = useState(true)
+
+  const hasCharacter = async () => {
+    if (!user.isSignedIn) return
+    const character = await fetch(`/api/character?userid=${user.userId}`, { method: "GET", cache: "no-store" })
+    const char = await character.json()
+    return char
+  }
 
   const links: ILinkType[] = [
     { icon: IconHome, label: "Home", url: "/" },
     // { icon: IconFriends, label: "Party", url: "/party" },
-    // { icon: IconBackpack, label: "Items", url: "/items" },
-    // { icon: IconSword, label: "Attacks", url: "/attacks" },
+    { icon: IconBackpack, label: "Items", url: "/character/items" },
+    { icon: IconSword, label: "Attacks", url: "/character/attacks" },
     { icon: IconWand, label: "Spells", url: "/spells" },
     { icon: IconBook, label: "Spellbook", url: "/character/spellbook" },
     { icon: IconChartBar, label: "Stats", url: "/character/stats" },
@@ -47,9 +54,10 @@ export default function Bar() {
     <Affix position={{ bottom: 0, right: 0 }} sx={{ width: opened ? "100%" : "max-content", background: "black", padding: "1rem", borderRadius: opened ? "none" : "25px 0 0 0" }}>
       <Center>
         <Group>
-          {(opened && user.isSignedIn) &&
+          {(opened && user.isLoaded && user.isSignedIn) &&
             <>
               {...linkIcons}
+              {!hasCharacter && <LinkButton link={{ icon: IconCirclePlus, label: "Create Character", url: "/character/create-character" }} />}
               <ActionIcon onClick={() => user.signOut()}>
                 <Stack sx={{ gap: "0" }}>
                   <Center>
@@ -58,7 +66,7 @@ export default function Bar() {
                 </Stack>
               </ActionIcon>
             </>
-          }{(opened && !user.isSignedIn) &&
+          }{(opened && user.isLoaded && !user.isSignedIn) &&
             <>
               <Link href="/Signin">
                 <Stack sx={{ gap: "0" }}>

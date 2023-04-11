@@ -73,7 +73,7 @@ export default function Page() {
 
   useEffect(() => {
     getData()
-  }, [])
+  })
 
   return (
     <div>

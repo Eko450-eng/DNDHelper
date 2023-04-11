@@ -1,9 +1,9 @@
 import db from "@/db/db"
-import { getAuth } from "@clerk/nextjs/server";
 import { Character, Stat } from "@/db/schema/schema"
 import { NextResponse } from "next/server"
-import { and, eq, exists } from 'drizzle-orm/expressions'
+import { and, eq } from 'drizzle-orm/expressions'
 
+// Create Stats
 export async function POST(req: Request) {
   const shorthands = {
     Strength: "STR",
@@ -48,6 +48,7 @@ export async function POST(req: Request) {
   return NextResponse.json({ status: 200, message: "Character created" })
 }
 
+// Get Stats
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url)
   const userID = searchParams.get("userID")

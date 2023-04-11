@@ -9,7 +9,15 @@ export const metadata = {
   icons: {
     icon: "/favicon.ico",
   },
-  manifest: "/manifest.json"
+  manifest: "/manifest.json",
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
+  },
+  other: {
+    HandheldFriendly: "true"
+  }
 }
 
 export default function RootLayout({

@@ -1,6 +1,6 @@
 'use client'
 
-import { Spell, Spellbook } from "@/db/schema/schema"
+import { Spell } from "@/db/schema/schema"
 import { useUser } from "@clerk/nextjs"
 import { Button } from "@mantine/core"
 
