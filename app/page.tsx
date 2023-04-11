@@ -9,11 +9,18 @@ import { Button, Center } from "@mantine/core"
 export default function Home() {
   const user = useUser()
   const [character, setCharacter] = useState<Character | null>(null)
+  const [pleaseCreate, setPleaseCreate] = useState(true)
 
   async function getUser() {
     if (!user.isSignedIn) return
     const character = await fetch(`/api/character?userid=${user.user.id}`, { method: "GET", cache: "no-store" })
     const char = await character.json()
+    console.log(char)
+    if (char === 500) {
+      setPleaseCreate(true)
+      return
+    }
+    setPleaseCreate(false)
     setCharacter(char)
   }
 
@@ -39,7 +46,7 @@ export default function Home() {
   useEffect(() => {
     getUser()
     setRole()
-  })
+  }, [])
 
   return (
     <main>
@@ -47,6 +54,7 @@ export default function Home() {
         <Center>
           <Button onClick={() => getUser()}>Reload</Button>
         </Center>
+        {pleaseCreate && <p>Please create a character</p>}
 
         {character &&
           <>

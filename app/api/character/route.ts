@@ -31,8 +31,12 @@ export async function GET(req: Request) {
   const userID = searchParams.get("userid")
 
   if (!userID) return
-  const character = await db.select().from(Character).where(eq(Character.playerid, userID))
-
-  return NextResponse.json(character[0])
-
+  console.log(userID)
+  try {
+    const character = await db.select().from(Character).where(eq(Character.playerid, userID))
+    return NextResponse.json(character[0])
+  } catch (e) {
+    console.log(e)
+    return NextResponse.json(500)
+  }
 }
