@@ -2,7 +2,7 @@
 
 import { Character } from "@/db/schema/schema"
 import { useUser } from "@clerk/nextjs"
-import { Button, Group, NumberInput, Progress, Stack, Text } from "@mantine/core"
+import { Button, Center, Group, NumberInput, Progress, Stack, Text } from "@mantine/core"
 import { useForm } from "@mantine/form"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
@@ -90,6 +90,7 @@ export function ShowParty({ character }: { character: Character }) {
     if (!user.isSignedIn) return
     const result = await fetch(`/api/party?partyid=${character.party}&playerid=${character.playerid}`).then(async (res) => res)
     const res = await result.json()
+    if (res === 500) return
     setPlayers(res)
   }
 
@@ -100,7 +101,7 @@ export function ShowParty({ character }: { character: Character }) {
   return (
     <>
       {
-        players && players.map((player: Character, k: number) => {
+        players ? players.map((player: Character, k: number) => {
           return (
             <div key={`party${k}`}>
               <ShowCharacterInfo character={player} />
@@ -108,6 +109,10 @@ export function ShowParty({ character }: { character: Character }) {
             </div>
           )
         })
+          :
+          <Center>
+            <Text>Please join a party for more information</Text>
+          </Center>
       }
     </>
   )

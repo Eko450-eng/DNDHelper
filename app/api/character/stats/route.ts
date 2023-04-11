@@ -25,8 +25,6 @@ export async function POST(req: Request) {
   const character = await db.select().from(Character).where(eq(Character.playerid, user.user.id))
   const characterid = character[0].id
 
-  console.log(character)
-
   const values = {
     name: name,
     value: value,
