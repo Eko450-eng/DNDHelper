@@ -10,5 +10,6 @@ export async function POST(req: Request) {
 
   if (!spellIds) return
   const spells = await db.select().from(Spell).where(inArray(Spell.id, spellIds))
+
   return NextResponse.json({ message: `The spells are`, spells: spells })
 }

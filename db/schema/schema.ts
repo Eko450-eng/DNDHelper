@@ -10,7 +10,7 @@ export const Spelllist = pgTable("listingsofspells", {
 
 export const Character = pgTable("character", {
   id: serial("id").primaryKey().notNull(),
-  name: varchar("name"),
+  name: varchar("name").notNull(),
   lvl: integer("lvl"),
   race: text("race"),
   alignment: text("alignment"),

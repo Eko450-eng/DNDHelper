@@ -30,15 +30,19 @@ export async function POST(req: Request) {
     .where(eq(Character.playerid, userId))
   const user = userColl[0]
 
-  await db.insert(Attack)
-    .values({
-      name: name,
-      atk: atk,
-      range: range,
-      type: type,
-      characterid: user.id,
-    })
-  return NextResponse.json({ status: 200, message: "Item created" })
+  try {
+    await db.insert(Attack)
+      .values({
+        name: name,
+        atk: atk,
+        range: range,
+        type: type,
+        characterid: user.id,
+      })
+    return NextResponse.json({ status: 200, message: "Item created" })
+  } catch (e) {
+    return NextResponse.json(500)
+  }
 }
 
 

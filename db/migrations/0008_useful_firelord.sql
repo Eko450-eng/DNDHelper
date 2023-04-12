@@ -1,1 +1,0 @@
-ALTER TABLE "detstat" DROP COLUMN IF EXISTS "relation";

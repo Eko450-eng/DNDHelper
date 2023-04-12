@@ -98,12 +98,17 @@ export function ShowParty({ character }: { character: Character }) {
     getParty()
   }, [])
 
+  useEffect(() => {
+    console.log(players)
+  }, [players])
+
   return (
     <>
       {
         players ? players.map((player: Character, k: number) => {
           return (
             <div key={`party${k}`}>
+              <Button onClick={() => getParty()}>Refresh Party</Button>
               <ShowCharacterInfo character={player} />
               <ShowHealth character={player} />
             </div>
@@ -112,6 +117,7 @@ export function ShowParty({ character }: { character: Character }) {
           :
           <Center>
             <Text>Please join a party for more information</Text>
+            <Button onClick={() => getParty()}>Refresh</Button>
           </Center>
       }
     </>

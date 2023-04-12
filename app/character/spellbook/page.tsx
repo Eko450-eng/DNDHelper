@@ -27,7 +27,7 @@ export default function Page() {
     setSpellbook(spell)
   }
 
-  async function changeSlots(values: { tier: number, slots: any }) {
+  async function changeSlots(values: { tier: number, slots: number }) {
     await fetch("/api/character/spellbook", {
       method: "POST",
       body: JSON.stringify({ user, ...values })
@@ -69,7 +69,7 @@ export default function Page() {
             <NumberInput
               label="Slots"
               value={v.slots ? v.slots : 0}
-              onChange={(value) => {
+              onChange={(value: number) => {
                 if (!v.tier && v.tier != 0) return
                 changeSlots({ tier: v.tier, slots: value })
               }}

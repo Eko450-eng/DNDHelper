@@ -7,7 +7,7 @@ import { IconX } from "@tabler/icons-react"
 import { useEffect, useState } from "react"
 
 export default function Page() {
-  const { user, isSignedIn, isLoaded } = useUser()
+  const { user, isSignedIn } = useUser()
   const [attacks, setAttacks] = useState<Attack[] | null>(null)
   const [modal, setModal] = useState(false)
   const form = useForm({
@@ -21,6 +21,7 @@ export default function Page() {
 
   async function getAttacks() {
     if (!isSignedIn) return
+    // TO-DO Set correct type for API
     const attack = await fetch(`/api/attacks?userId=${user.id}`, { method: "GET", cache: "no-store" }).then(async (res: any) => res)
     if (attack === 500) return
     const attacks = await attack.json()

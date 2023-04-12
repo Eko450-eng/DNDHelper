@@ -1,12 +1,12 @@
 'use client'
 import { ActionIcon, Affix, Center, Group, Stack } from "@mantine/core"
-import { IconBackpack, IconBarrel, IconBook, IconChartBar, IconCirclePlus, IconHome, IconLogin, IconLogout, IconSword, IconUserPlus, IconWand } from '@tabler/icons-react'
+import { IconBackpack, IconBarrel, IconBook, IconChartBar, IconCirclePlus, IconHome, IconLogin, IconLogout, IconSword, IconUserPlus, IconWand, TablerIconsProps } from '@tabler/icons-react'
 import { useAuth } from '@clerk/nextjs'
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 interface ILinkType {
-  icon: any
+  icon: (props: TablerIconsProps) => JSX.Element;
   label: string
   url: string
 }

@@ -7,6 +7,20 @@ import { useForm } from '@mantine/form'
 import { IconCheck, IconX } from '@tabler/icons-react'
 import { useEffect, useState } from 'react'
 
+interface StatLike {
+  name: string,
+  value: number,
+  savingvalue: number,
+  modifier: number,
+  shorthand: string
+}
+
+interface DetStatLike {
+  name: string,
+  value: number,
+  proficiency: boolean,
+}
+
 export default function Page() {
   const user = useUser()
   const [modal, setModal] = useState(false)
@@ -32,7 +46,7 @@ export default function Page() {
     }
   })
 
-  async function createUser(values: any) {
+  async function createUser(values: StatLike) {
     await fetch("/api/character/stats", {
       method: "POST",
       body: JSON.stringify({ user, ...values })
@@ -42,7 +56,7 @@ export default function Page() {
     })
   }
 
-  async function createDet(values: any) {
+  async function createDet(values: DetStatLike) {
     await fetch("/api/character/detstats", {
       method: "POST",
       body: JSON.stringify({ user, ...values })
@@ -54,6 +68,7 @@ export default function Page() {
 
   async function getStats() {
     if (!user.isSignedIn) return
+    // TO-DO Set correct type for API
     const stats = await fetch(`/api/character/stats?userid=${user.user.id}`, { method: "GET", cache: "no-store" }).then(async (res: any) => res)
     const stat = await stats.json()
     if (stat === 500) return
@@ -62,6 +77,7 @@ export default function Page() {
 
   async function getDetstats() {
     if (!user.isSignedIn) return
+    // TO-DO Set correct type for API
     const detstats = await fetch(`/api/character/detstats?userid=${user.user.id}`, { method: "GET", cache: "no-store" }).then(async (res: any) => res)
     const detstat = await detstats.json()
     if (detstat === 500) return

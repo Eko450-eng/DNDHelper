@@ -1,3 +1,5 @@
+import { User } from "@clerk/nextjs/dist/api"
+import { UserResource } from "@clerk/types"
 
 export async function getCertainSpell(ids: number[]) {
   if (ids.length == 0) return
@@ -10,13 +12,14 @@ export async function getCertainSpell(ids: number[]) {
   return res
 }
 
-export async function removeSpell(id: number, tier: number, user: any) {
+export async function removeSpell(id: number, tier: number, user: UserResource | null | undefined) {
+  if (!user) return
   const body = {
     spellId: id,
     tier: tier,
     user: user
   }
 
-  const res = await fetch(`/api/spells/removeown`, { method: "DELETE", body: JSON.stringify(body) })
+  const res = await fetch(`/api/spells`, { method: "DELETE", body: JSON.stringify(body) })
   return res.json()
 }

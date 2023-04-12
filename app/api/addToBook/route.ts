@@ -12,28 +12,42 @@ export async function POST(req: Request) {
 
   const existing: Spellbook[] = await db.select().from(Spellbook).where(and(eq(Spellbook.characterid, characterid), eq(Spellbook.tier, tier)))
 
-  if (!existing) await db.insert(Spellbook).values({
-    spells: spells,
-    characterid: characterid,
-    slots: 0,
-    tier: tier
-  })
+  // Create new spellbook if it doesn't exist
+  if (existing.length === 0) {
+    try {
+      await db.insert(Spellbook).values({
+        spells: [spells],
+        characterid: characterid,
+        slots: 0,
+        tier: tier
+      })
 
-  const oldSpells = existing[0].spells
-  if (oldSpells && oldSpells.includes(spells)) return NextResponse.json(500)
+      return NextResponse.json({ status: 200, message: "Spell has been added to new spellbook" })
+    } catch (e) {
+      return NextResponse.json(500)
+    }
 
-  const newSpells = () => {
-    if (!oldSpells) return [spells]
-    return [...oldSpells, spells]
+  } else {
+    // Update existing spellbook
+    const oldSpells = existing[0].spells
+
+    // Check if spell has already been added
+    if (oldSpells && oldSpells.includes(spells)) return NextResponse.json(500)
+
+    const newSpells = () => {
+      if (!oldSpells) return [spells]
+      return [...oldSpells, spells]
+    }
+
+    await db.update(Spellbook)
+      .set({
+        spells: newSpells()
+      })
+      .where(and(eq(Spellbook.characterid, characterid), eq(Spellbook.tier, tier)))
+
+    return NextResponse.json({ status: 200, message: "Spell has been added to spellbook" })
+
   }
-
-  await db.update(Spellbook)
-    .set({
-      spells: newSpells()
-    })
-    .where(and(eq(Spellbook.characterid, characterid), eq(Spellbook.tier, tier)))
-
-  return NextResponse.json({ status: 200, message: "Character created" })
 }
 
 export async function GET(req: Request) {

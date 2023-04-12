@@ -1,32 +1,8 @@
 import db from "@/db/db"
-import { Spell } from "@/db/schema/schema"
+import { Character, Spell, Spellbook } from "@/db/schema/schema"
 import { NextResponse } from "next/server"
 import { sql } from "drizzle-orm"
-import { asc } from "drizzle-orm/expressions"
-
-// interface IAPILIST {
-//   name: string
-//   index: string
-//   url: string
-// }
-
-// interface IAPICLASSES {
-//   index: string
-//   name: string
-//   url: string
-// }
-
-// interface IAPIITEM {
-//   name: string
-//   index: string
-//   desc: string[]
-//   range: string
-//   components: string[]
-//   duration: string
-//   casting_time: string
-//   level: number,
-//   classes: IAPICLASSES[]
-// }
+import { and, asc, eq } from "drizzle-orm/expressions"
 
 // Get Spells
 export async function GET(req: Request) {
@@ -50,35 +26,6 @@ export async function GET(req: Request) {
 
 // Create Spell
 export async function POST(req: Request) {
-  //DO NOT USE
-  // const list = await db.select().from(Spelllist)
-
-  // list.forEach(async (item: any) => {
-  //   if (!item.url) return
-  //   const i = await fetch(`https://www.dnd5eapi.co${item.url}`)
-  //   const it: IAPIITEM = await i.json()
-
-  //   const getClasses = () => {
-  //     let classes: string[] = []
-  //     it.classes.forEach(cl => {
-  //       classes.push(cl.name)
-  //     })
-  //     return classes
-  //   }
-
-  //   await db.insert(Spell).values({
-  //     name: it.name,
-  //     casting_time: it.casting_time,
-  //     components: it.components ? it.components : [],
-  //     duration: it.duration,
-  //     level: it.level,
-  //     range: it.range,
-  //     classes: getClasses(),
-  //     desc: it.desc[0],
-  //     higherdesc: it.desc[1] ? it.desc[1] : "",
-  //   })
-  // })
-
   const body = await req.json() as Spell
   const { desc, higherdesc, casting_time, name, range, duration, components, level } = body
 
@@ -99,4 +46,23 @@ export async function POST(req: Request) {
   } catch (e: unknown) {
     return NextResponse.json({ status: 500, message: e })
   }
+}
+
+
+export async function DELETE(req: Request) {
+  const body = await req.json()
+  const { spellId, tier, user } = body
+
+  const character = await db.select().from(Character).where(eq(Character.playerid, user.id))
+  const characterid = character[0].id
+
+  if (!spellId) return
+  const book: Spellbook[] = await db.select().from(Spellbook).where(and(eq(Spellbook.characterid, characterid), eq(Spellbook.tier, tier)))
+  const oldSpells = book[0].spells
+  const newSpells = oldSpells?.filter(spell => { return spell != spellId })
+
+  const spells = await db.update(Spellbook)
+    .set({ spells: newSpells })
+    .where(and(eq(Spellbook.characterid, characterid), eq(Spellbook.tier, tier)))
+  return NextResponse.json({ message: `The spells are`, spells: spells })
 }

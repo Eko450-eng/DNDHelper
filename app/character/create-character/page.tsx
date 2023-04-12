@@ -5,6 +5,28 @@ import { Button, NumberInput, Select, TextInput } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { useRouter } from 'next/navigation'
 
+interface CharacterLike {
+  name: string,
+  classes: string,
+  lvl: number,
+  race: string,
+  alignment: string,
+  background: string,
+  hp: number,
+  ac: number,
+  init: number,
+  playerid: string,
+  attacks: number,
+  coins: number,
+  equipment: number,
+  abillitie: number,
+  language: number,
+  stat: number,
+  detstat: number,
+  spellbook: number,
+  party: number
+}
+
 export default function Page() {
   const user = useUser()
   const router = useRouter()
@@ -32,7 +54,7 @@ export default function Page() {
     }
   })
 
-  async function createUser(values: any) {
+  async function createUser(values: CharacterLike) {
     await fetch("/api/character", {
       method: "POST",
       body: JSON.stringify({ user, ...values })

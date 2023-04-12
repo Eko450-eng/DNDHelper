@@ -19,6 +19,7 @@ export default function Page() {
 
   async function getEquipment() {
     if (!isSignedIn) return
+    // TO-DO Set correct type for API
     const items = await fetch(`/api/items?userId=${user.id}`, { method: "GET", cache: "no-store" }).then(async (res: any) => res)
     const equipment = await items.json()
     setItems(equipment)

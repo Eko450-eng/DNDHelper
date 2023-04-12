@@ -1,8 +1,8 @@
 {
+  "id": "00000000-0000-0000-0000-000000000000",
+  "prevId": "",
   "version": "5",
   "dialect": "pg",
-  "id": "2c2885de-90b0-48d0-a1c5-f025b2813be1",
-  "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "abillitie": {
       "name": "abillitie",
@@ -11,7 +11,7 @@
         "id": {
           "name": "id",
           "type": "serial",
-          "primaryKey": true,
+          "primaryKey": false,
           "notNull": true
         },
         "name": {
@@ -25,6 +25,319 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {}
     },
+    "class": {
+      "name": "class",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "index": {
+          "name": "index",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "url": {
+          "name": "url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {}
+    },
+    "language": {
+      "name": "language",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {}
+    },
+    "spellbook": {
+      "name": "spellbook",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tier": {
+          "name": "tier",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "slots": {
+          "name": "slots",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "characterid": {
+          "name": "characterid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "spells": {
+          "name": "spells",
+          "type": "integer[]",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {}
+    },
+    "coins": {
+      "name": "coins",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "pp": {
+          "name": "pp",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "gp": {
+          "name": "gp",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ep": {
+          "name": "ep",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sp": {
+          "name": "sp",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "cp": {
+          "name": "cp",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "characterid": {
+          "name": "characterid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "coins_characterid_character_id_fk": {
+          "name": "coins_characterid_character_id_fk",
+          "tableFrom": "coins",
+          "tableTo": "character",
+          "columnsFrom": [
+            "characterid"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {}
+    },
+    "detstat": {
+      "name": "detstat",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "value": {
+          "name": "value",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "proficiency": {
+          "name": "proficiency",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "characterid": {
+          "name": "characterid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {}
+    },
+    "spell": {
+      "name": "spell",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "casting_time": {
+          "name": "casting_time",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "range": {
+          "name": "range",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "duration": {
+          "name": "duration",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "components": {
+          "name": "components",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "desc": {
+          "name": "desc",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "level": {
+          "name": "level",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "classes": {
+          "name": "classes",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "higherdesc": {
+          "name": "higherdesc",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {}
+    },
+    "equipment": {
+      "name": "equipment",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "amount": {
+          "name": "amount",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "characterid": {
+          "name": "characterid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "equipment_characterid_character_id_fk": {
+          "name": "equipment_characterid_character_id_fk",
+          "tableFrom": "equipment",
+          "tableTo": "character",
+          "columnsFrom": [
+            "characterid"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {}
+    },
     "attack": {
       "name": "attack",
       "schema": "",
@@ -32,7 +345,7 @@
         "id": {
           "name": "id",
           "type": "serial",
-          "primaryKey": true,
+          "primaryKey": false,
           "notNull": true
         },
         "name": {
@@ -58,6 +371,59 @@
           "type": "varchar",
           "primaryKey": false,
           "notNull": false
+        },
+        "characterid": {
+          "name": "characterid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "attack_characterid_character_id_fk": {
+          "name": "attack_characterid_character_id_fk",
+          "tableFrom": "attack",
+          "tableTo": "character",
+          "columnsFrom": [
+            "characterid"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {}
+    },
+    "listingsofspells": {
+      "name": "listingsofspells",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "index": {
+          "name": "index",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "url": {
+          "name": "url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {},
@@ -71,14 +437,14 @@
         "id": {
           "name": "id",
           "type": "serial",
-          "primaryKey": true,
+          "primaryKey": false,
           "notNull": true
         },
         "name": {
           "name": "name",
           "type": "varchar",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "lvl": {
           "name": "lvl",
@@ -134,24 +500,6 @@
           "primaryKey": false,
           "notNull": false
         },
-        "attacks": {
-          "name": "attacks",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "equipment": {
-          "name": "equipment",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "coins": {
-          "name": "coins",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
         "abillitie": {
           "name": "abillitie",
           "type": "integer",
@@ -164,20 +512,14 @@
           "primaryKey": false,
           "notNull": false
         },
-        "stat": {
-          "name": "stat",
+        "maxhp": {
+          "name": "maxhp",
           "type": "integer",
           "primaryKey": false,
           "notNull": false
         },
-        "detstat": {
-          "name": "detstat",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "spellbook": {
-          "name": "spellbook",
+        "party": {
+          "name": "party",
           "type": "integer",
           "primaryKey": false,
           "notNull": false
@@ -185,45 +527,6 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "character_attacks_attack_id_fk": {
-          "name": "character_attacks_attack_id_fk",
-          "tableFrom": "character",
-          "tableTo": "attack",
-          "columnsFrom": [
-            "attacks"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        },
-        "character_equipment_equipment_id_fk": {
-          "name": "character_equipment_equipment_id_fk",
-          "tableFrom": "character",
-          "tableTo": "equipment",
-          "columnsFrom": [
-            "equipment"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        },
-        "character_coins_coins_id_fk": {
-          "name": "character_coins_coins_id_fk",
-          "tableFrom": "character",
-          "tableTo": "coins",
-          "columnsFrom": [
-            "coins"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        },
         "character_abillitie_abillitie_id_fk": {
           "name": "character_abillitie_abillitie_id_fk",
           "tableFrom": "character",
@@ -249,322 +552,8 @@
           ],
           "onDelete": "no action",
           "onUpdate": "no action"
-        },
-        "character_stat_stat_id_fk": {
-          "name": "character_stat_stat_id_fk",
-          "tableFrom": "character",
-          "tableTo": "stat",
-          "columnsFrom": [
-            "stat"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        },
-        "character_detstat_detstat_id_fk": {
-          "name": "character_detstat_detstat_id_fk",
-          "tableFrom": "character",
-          "tableTo": "detstat",
-          "columnsFrom": [
-            "detstat"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        },
-        "character_spellbook_spellbook_id_fk": {
-          "name": "character_spellbook_spellbook_id_fk",
-          "tableFrom": "character",
-          "tableTo": "spellbook",
-          "columnsFrom": [
-            "spellbook"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
         }
       },
-      "compositePrimaryKeys": {}
-    },
-    "class": {
-      "name": "class",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "index": {
-          "name": "index",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "name": {
-          "name": "name",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "url": {
-          "name": "url",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {}
-    },
-    "coins": {
-      "name": "coins",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "pp": {
-          "name": "pp",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "gp": {
-          "name": "gp",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "ep": {
-          "name": "ep",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "sp": {
-          "name": "sp",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "cp": {
-          "name": "cp",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {}
-    },
-    "detstat": {
-      "name": "detstat",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "name": {
-          "name": "name",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "value": {
-          "name": "value",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "proficiency": {
-          "name": "proficiency",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "relation": {
-          "name": "relation",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {}
-    },
-    "equipment": {
-      "name": "equipment",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "name": {
-          "name": "name",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "amount": {
-          "name": "amount",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {}
-    },
-    "language": {
-      "name": "language",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "name": {
-          "name": "name",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {}
-    },
-    "spell": {
-      "name": "spell",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "name": {
-          "name": "name",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "casting_time": {
-          "name": "casting_time",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "index": {
-          "name": "index",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "range": {
-          "name": "range",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "duration": {
-          "name": "duration",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "components": {
-          "name": "components",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "desc": {
-          "name": "desc",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "tier": {
-          "name": "tier",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "classes": {
-          "name": "classes",
-          "type": "integer[]",
-          "primaryKey": false,
-          "notNull": false
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "spell_tier_spellbook_id_fk": {
-          "name": "spell_tier_spellbook_id_fk",
-          "tableFrom": "spell",
-          "tableTo": "spellbook",
-          "columnsFrom": [
-            "tier"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {}
-    },
-    "spellbook": {
-      "name": "spellbook",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "tier": {
-          "name": "tier",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "slots": {
-          "name": "slots",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
       "compositePrimaryKeys": {}
     },
     "stat": {
@@ -574,7 +563,7 @@
         "id": {
           "name": "id",
           "type": "serial",
-          "primaryKey": true,
+          "primaryKey": false,
           "notNull": true
         },
         "name": {
@@ -606,10 +595,30 @@
           "type": "text",
           "primaryKey": false,
           "notNull": false
+        },
+        "characterid": {
+          "name": "characterid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "stat_characterid_character_id_fk": {
+          "name": "stat_characterid_character_id_fk",
+          "tableFrom": "stat",
+          "tableTo": "character",
+          "columnsFrom": [
+            "characterid"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {}
     }
   },
